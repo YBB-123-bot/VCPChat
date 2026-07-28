@@ -1056,19 +1056,20 @@ if (!gotTheLock) {
             }
         });
 
-        globalShortcut.register('Control+Shift+I', () => {
-            const focusedWindow = BrowserWindow.getFocusedWindow();
-            if (focusedWindow && focusedWindow.webContents && !focusedWindow.webContents.isDestroyed()) {
-                focusedWindow.webContents.toggleDevTools();
-            }
-        });
+        // 临时禁用全局快捷键，排查 Ctrl 键卡死问题
+        // globalShortcut.register('Control+Shift+I', () => {
+        //     const focusedWindow = BrowserWindow.getFocusedWindow();
+        //     if (focusedWindow && focusedWindow.webContents && !focusedWindow.webContents.isDestroyed()) {
+        //         focusedWindow.webContents.toggleDevTools();
+        //     }
+        // });
 
-        const noteMiniShortcutRegistered = globalShortcut.register('Super+Alt+Z', () => {
-            notesHandlers.createOrFocusNoteMiniWindow();
-        });
-        if (!noteMiniShortcutRegistered) {
-            console.warn('[Main] Failed to register global shortcut: Super+Alt+Z');
-        }
+        // const noteMiniShortcutRegistered = globalShortcut.register('Super+Alt+Z', () => {
+        //     notesHandlers.createOrFocusNoteMiniWindow();
+        // });
+        // if (!noteMiniShortcutRegistered) {
+        //     console.warn('[Main] Failed to register global shortcut: Super+Alt+Z');
+        // }
 
         // 移除全局 Command+Q 快捷键，改用标准的应用程序菜单
 

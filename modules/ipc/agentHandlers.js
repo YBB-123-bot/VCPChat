@@ -168,7 +168,7 @@ function initialize(context) {
                         topics: agentData.topics,
                         systemPrompt: `你是 ${folderName}。`,
                         model: '',
-                        temperature: 0.7,
+                        temperature: 1.0,
                         contextTokenLimit: 4000,
                         maxOutputTokens: 1000,
                         disableCustomColors: true,
@@ -303,6 +303,11 @@ function initialize(context) {
     ipcMain.handle('update-agent-config', async (event, agentId, updates) => {
         try {
             if (agentConfigManager) {
+                // 强制处理：Kimi K2.5/K2.6 模型必须使用 temperature: 1.0
+                if (updates.model && typeof updates.model === 'string' && updates.model.toLowerCase().includes('kimi-k2')) {
+                    updates.temperature = 1.0;
+                }
+
                 const result = await agentConfigManager.updateAgentConfig(agentId, existingConfig => ({
                     ...existingConfig,
                     ...updates
@@ -424,7 +429,7 @@ function initialize(context) {
                     name: agentName,
                     systemPrompt: `你是 ${agentName}。`,
                     model: 'gemini-2.5-flash-preview-05-20',
-                    temperature: 0.7,
+                    temperature: 1.0,
                     contextTokenLimit: 1000000,
                     maxOutputTokens: 60000,
                     topics: [{ id: "default", name: "主要对话", createdAt: Date.now() }],

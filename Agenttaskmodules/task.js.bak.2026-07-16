@@ -232,10 +232,6 @@ async function initializeApi() {
         }
 
         serverBaseUrl = settings.vcpServerUrl.replace(/\/v1\/chat\/completions\/?$/, '');
-        // 修复：admin_api 请求直接指向管理面板 (6006)，避免主服务代理丢失 Authorization 头
-        if (serverBaseUrl.includes(':6005')) {
-            serverBaseUrl = serverBaseUrl.replace(':6005', ':6006');
-        }
         if (!serverBaseUrl.endsWith('/')) serverBaseUrl += '/';
         
         // Use the same Basic Auth as the forum module since they all share /admin_api
